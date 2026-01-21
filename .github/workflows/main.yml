@@ -13,18 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: ${{ secrets.AWS_REGION }}
           application_name: ${{ secrets.EB_APPLICATION_NAME }}
           environment_name: ${{ secrets.EB_ENVIRONMENT_NAME }}
-          version_label: github-${{ github.run_number }}
-          deployment_package: build
+          region: ap-south-1
+          version_label: ${{ github.sha }}
